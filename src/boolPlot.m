@@ -1,4 +1,30 @@
 function hPlot = boolPlot(data, time)
+% *************************************************************************
+% Program:      Boolean Ploter
+%
+% File:         <a href="matlab:open('boolPlot.m')">boolPlot.m</a>
+%
+% Functions:    hPlot = boolPlot(data, time)
+%
+% Description:  Makes a stacked plot for boolean values.
+%
+% Arguments:    data:
+%                   timeseries object or a nueric array, can a be matrix.
+%               time:
+%                   time vector, only used if the "data" arg is numeric. In
+%                   this case time may still be ommited.
+%
+% Returns:      hPlot:
+%                   handle to the produced figure
+%
+% Useage:       boolPlot(randi([0,1],50,5))
+%
+% Revisions:    1.00 04/05/20 (tf) First release
+%
+% See also:     randomPlot
+% *************************************************************************
+
+%% boolPlot
 
 openNewFigure = false;
 figTag = 'boolPlotFig';
@@ -23,6 +49,7 @@ else
     else
         clf(hPlot);
         hAxe = axes(hPlot);
+        figure(hPlot);
     end
 end
 
@@ -90,7 +117,6 @@ end
 
 function [tsOutArray, nElem] = compressTimeseries(tsIn)
     nTime = numel(tsIn.Time);
-    find(size(tsIn.Data) == nTime)
     nElem = numel(tsIn.Data)/nTime;
     allData = boolean(tsIn.Data);
     indexAllData = @(n) (n-1)*nTime+1:(n-1)*nTime+nTime;
