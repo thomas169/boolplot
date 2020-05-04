@@ -123,7 +123,7 @@ function [tsOutArray, nElem] = compressTimeseries(tsIn)
     tsOutArray(nElem) = timeseries;
     for n = 1 : nElem
         elemData = allData(indexAllData(n));
-        deltas = reshape(diff(elemData(1:end-1))~=0,nTime-2,1)
+        deltas = reshape(diff(elemData(1:end-1))~=0,nTime-2,1);
         deltaIdx = [true; deltas; true];
         deltaData = reshape(elemData(deltaIdx),sum(deltaIdx),1);
         deltaTime = tsIn.Time(deltaIdx);
