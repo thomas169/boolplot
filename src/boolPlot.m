@@ -63,7 +63,7 @@ if numData
     if nargin < 2
         tsData = timeseries(data,0:length(data)-1);
     else
-        assert(isrow(time),'time nust be a row vector')
+        time = reshape(time,1,numel(time));
         if (find(size(data) == numel(time),1) ~= 1)
             data = transpose(data);
         end
@@ -123,9 +123,10 @@ function [tsOutArray, nElem] = compressTimeseries(tsIn)
     tsOutArray(nElem) = timeseries;
     for n = 1 : nElem
         elemData = allData(indexAllData(n));
-        deltaIdx = [true; (diff(elemData(1:end-1))~=0)'; true];
-        deltaData = elemData(deltaIdx);
+        deltas = reshape(diff(elemData(1:end-1))~=0,nTime-2,1)
+        deltaIdx = [true; deltas; true];
+        deltaData = reshape(elemData(deltaIdx),sum(deltaIdx),1);
         deltaTime = tsIn.Time(deltaIdx);
-        tsOutArray(n) = timeseries(deltaData',deltaTime);
+        tsOutArray(n) = timeseries(deltaData,deltaTime);
     end
 end
