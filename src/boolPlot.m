@@ -82,23 +82,23 @@ maxT = 0;
 for n = 1 : nPlot
     idx = (n-1)*3+1;
     yTickLabel(idx:idx+2) = {falseLabel,['Bit' num2str(n-1)],trueLable};
-    y = tsPlot(n).Data;
-    x = tsPlot(n).Time;
-    minT = min(minT,min(x));
-    maxT = max(maxT,max(x));
+    b = tsPlot(n).Data;
+    t = tsPlot(n).Time;
+    minT = min(minT,min(t));
+    maxT = max(maxT,max(t));
     rbg = cM(mod(n-1,cN)+1,:);
     Y = [];
-    if isvector(x) && ismatrix(y) && size(y,1)==length(x)
-        x = reshape(x,length(x),1);   
+    if isvector(t) && ismatrix(b) && size(b,1)==length(t)
+        t = reshape(t,length(t),1);   
     else
         error('x and y dimentions should be consistent.')
     end
-    for k = 1 :size(y,2)
-        x = [x';x'];
-        temp = [y(:,k)';y(:,k)'];
-        temp = temp(:);
-        Y(:,k) = temp; %#ok<AGROW>
-        xPlot = [x([2:end end]), fliplr(x([2:end end]))];
+    for k = 1 : size(b,2)
+        t = [t'; t'];
+        rect = [b(:,k)'; b(:,k)'];
+        rect = rect(:);
+        Y(:,k) = rect; %#ok<AGROW>
+        xPlot = [t([2:end end]), fliplr(t([2:end end]))];
         yPlot = boolHeight * [Y; zeros(length(xPlot)/2,size(Y,2))];
         patch(hAxe,'XData',xPlot,'YData',yPlot+yOffset,'FaceColor',rbg);
         yOffset = yOffset + boolHeight + boolSpace;
